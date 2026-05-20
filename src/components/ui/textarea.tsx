@@ -12,7 +12,7 @@ export type TextareaProps = Omit<
 };
 
 export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, id, label, rows = 4, ...props }, ref) => {
+  function Textarea({ className, id, label, rows = 4, ...props }, ref) {
     const autoId = React.useId();
     const textareaId = id ?? autoId;
 
@@ -42,4 +42,3 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 );
 
 Textarea.displayName = "Textarea";
-

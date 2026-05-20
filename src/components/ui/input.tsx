@@ -12,7 +12,7 @@ export type InputProps = Omit<
 };
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, id, label, ...props }, ref) => {
+  function Input({ className, id, label, ...props }, ref) {
     const autoId = React.useId();
     const inputId = id ?? autoId;
 
@@ -41,4 +41,3 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 );
 
 Input.displayName = "Input";
-
