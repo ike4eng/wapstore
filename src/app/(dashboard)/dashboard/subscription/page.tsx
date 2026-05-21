@@ -10,7 +10,7 @@ export const metadata = {
 export default async function SubscriptionPage({
   searchParams
 }: {
-  searchParams?: { payfast?: string };
+  searchParams?: Promise<{ payfast?: string }>;
 }) {
   const { supabase, user } = await requireUser();
 
@@ -27,7 +27,8 @@ export default async function SubscriptionPage({
       ? "premium"
       : "free";
 
-  const payfastStatus = searchParams?.payfast;
+  const sp = await searchParams;
+  const payfastStatus = sp?.payfast;
   const showPayfastSuccess = payfastStatus === "success";
   const showPayfastCancel = payfastStatus === "cancel";
 

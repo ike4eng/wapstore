@@ -4,10 +4,11 @@ export const metadata = {
   title: "Log in"
 };
 
-export default function LoginPage({
+export default async function LoginPage({
   searchParams
 }: {
-  searchParams?: { redirectTo?: string };
+  searchParams?: Promise<{ redirectTo?: string }>;
 }) {
-  return <LoginForm redirectTo={searchParams?.redirectTo} />;
+  const sp = await searchParams;
+  return <LoginForm redirectTo={sp?.redirectTo} />;
 }
