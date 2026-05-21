@@ -7,13 +7,14 @@ import { getDemoProductsBySlug, getDemoStoreBySlug } from "@/lib/demo";
 export async function generateMetadata({
   params
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
+  const { slug } = await params;
   const supabase = createSupabaseServerClient();
   const { data: store } = await supabase
     .from("stores")
     .select("store_name,description,logo_url")
-    .eq("slug", params.slug)
+    .eq("slug", slug)
     .maybeSingle();
 
   if (store) {
@@ -28,7 +29,7 @@ export async function generateMetadata({
     };
   }
 
-  const demoStore = getDemoStoreBySlug(params.slug);
+  const demoStore = getDemoStoreBySlug(slug);
   if (demoStore) {
     return {
       title: demoStore.store_name,
@@ -47,23 +48,24 @@ export async function generateMetadata({
 export default async function StorefrontPage({
   params
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
+  const { slug } = await params;
   const supabase = createSupabaseServerClient();
 
   const { data: store } = await supabase
     .from("stores")
     .select("*")
-    .eq("slug", params.slug)
+    .eq("slug", slug)
     .maybeSingle();
 
   if (!store) {
-    const demoStore = getDemoStoreBySlug(params.slug);
+    const demoStore = getDemoStoreBySlug(slug);
     if (demoStore) {
       return (
         <StorefrontClient
           store={demoStore as any}
-          products={getDemoProductsBySlug(params.slug) as any}
+          products={getDemoProductsBySlug(slug) as any}
           showBranding={true}
         />
       );
