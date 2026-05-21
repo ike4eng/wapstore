@@ -13,8 +13,7 @@ export type TextareaProps = Omit<
 
 export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   function Textarea({ className, id, label, rows = 4, ...props }, ref) {
-    const autoId = React.useId();
-    const textareaId = id ?? autoId;
+    const textareaId = id;
 
     return (
       <div className="space-y-2">

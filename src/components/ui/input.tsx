@@ -13,8 +13,7 @@ export type InputProps = Omit<
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   function Input({ className, id, label, ...props }, ref) {
-    const autoId = React.useId();
-    const inputId = id ?? autoId;
+    const inputId = id;
 
     return (
       <div className="space-y-2">
