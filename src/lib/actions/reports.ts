@@ -23,7 +23,7 @@ export async function createSupportReportAction(formData: FormData) {
     return { ok: false, message: "Invalid input." };
   }
 
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const {
     data: { user }
   } = await supabase.auth.getUser();

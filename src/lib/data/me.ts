@@ -5,7 +5,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { Profile, Store, Subscription } from "@/lib/db/types";
 
 export async function requireUser() {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const {
     data: { user }
   } = await supabase.auth.getUser();
@@ -46,4 +46,3 @@ export async function getMyStore(): Promise<Store | null> {
     .maybeSingle();
   return (data as Store | null) ?? null;
 }
-

@@ -25,7 +25,10 @@ const productSchema = z.object({
 
 const productUpdateSchema = productSchema.omit({ store_id: true });
 
-async function getPlanForUser(supabase: ReturnType<typeof createSupabaseServerClient>, userId: string) {
+async function getPlanForUser(
+  supabase: Awaited<ReturnType<typeof createSupabaseServerClient>>,
+  userId: string
+) {
   const { data } = await supabase
     .from("subscriptions")
     .select("plan_type,status")
@@ -57,7 +60,7 @@ export async function createProductAction(formData: FormData) {
     return { ok: false, code: "VALIDATION", message: "Invalid input." };
   }
 
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const {
     data: { user }
   } = await supabase.auth.getUser();
@@ -124,7 +127,7 @@ export async function updateProductAction(formData: FormData) {
     return { ok: false, message: "Invalid input." };
   }
 
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const {
     data: { user }
   } = await supabase.auth.getUser();
@@ -166,7 +169,7 @@ export async function deleteProductAction(formData: FormData) {
     }
     return { ok: false, message: "Invalid request." };
   }
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const {
     data: { user }
   } = await supabase.auth.getUser();
@@ -203,7 +206,7 @@ export async function toggleProductActiveAction(formData: FormData) {
     return { ok: false, message: "Invalid request." };
   }
 
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const {
     data: { user }
   } = await supabase.auth.getUser();

@@ -24,7 +24,7 @@ export async function startFromDemoTemplateAction(formData: FormData) {
     return { ok: false, message: "Invalid template." };
   }
 
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const {
     data: { user }
   } = await supabase.auth.getUser();
@@ -121,7 +121,7 @@ export async function resetTemplateStoreAction(formData: FormData) {
     return { ok: false, message: "Invalid request." };
   }
 
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const {
     data: { user }
   } = await supabase.auth.getUser();

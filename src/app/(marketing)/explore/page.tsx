@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 export default async function ExplorePage() {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
 
   const { data: featured } = await supabase
     .from("stores")

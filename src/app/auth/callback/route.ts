@@ -11,9 +11,8 @@ export async function GET(req: NextRequest) {
     return NextResponse.redirect(new URL("/login", url.origin));
   }
 
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   await supabase.auth.exchangeCodeForSession(code);
 
   return NextResponse.redirect(new URL(next, url.origin));
 }
-

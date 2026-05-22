@@ -40,7 +40,7 @@ export async function upsertMyStoreAction(formData: FormData) {
     return { ok: false, message: "Could not save store settings." };
   }
 
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const {
     data: { user }
   } = await supabase.auth.getUser();

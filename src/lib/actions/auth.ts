@@ -13,7 +13,7 @@ export async function signUpAction(formData: FormData) {
     const email = emailSchema.parse(formData.get("email"));
     const password = passwordSchema.parse(formData.get("password"));
 
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient();
     const { error } = await supabase.auth.signUp({
       email,
       password
@@ -41,7 +41,7 @@ export async function signInAction(formData: FormData) {
       .optional()
       .parse(formData.get("redirectTo") ?? undefined);
 
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient();
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password
@@ -61,7 +61,7 @@ export async function signInAction(formData: FormData) {
 }
 
 export async function signOutAction() {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   await supabase.auth.signOut();
   redirect("/");
 }
@@ -71,7 +71,7 @@ export async function requestPasswordResetAction(formData: FormData) {
     const email = emailSchema.parse(formData.get("email"));
     const { appUrl } = publicEnv();
 
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient();
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${appUrl}/auth/callback?next=/reset-password`
     });
@@ -92,7 +92,7 @@ export async function requestPasswordResetAction(formData: FormData) {
 export async function updatePasswordAction(formData: FormData) {
   try {
     const password = passwordSchema.parse(formData.get("password"));
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient();
     const { error } = await supabase.auth.updateUser({ password });
 
     if (error) {

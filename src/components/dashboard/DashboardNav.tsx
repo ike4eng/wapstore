@@ -5,7 +5,7 @@ import { signOutAction } from "@/lib/actions/auth";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export async function DashboardNav() {
-  const supabase = createSupabaseServerClient();
+  const supabase = await createSupabaseServerClient();
   const {
     data: { user }
   } = await supabase.auth.getUser();
@@ -107,4 +107,3 @@ export async function DashboardNav() {
     </header>
   );
 }
-
