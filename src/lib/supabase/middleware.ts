@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import type { NextRequest } from "next/server";
+import type { CookieOptions } from "@supabase/ssr";
 import { NextResponse } from "next/server";
 import { publicEnv } from "@/lib/env";
 
@@ -12,14 +13,15 @@ export function createSupabaseMiddlewareClient(req: NextRequest) {
       getAll() {
         return req.cookies.getAll();
       },
-      setAll(cookiesToSet) {
-        cookiesToSet.forEach(({ name, value, options }) => {
+      setAll(
+        cookiesToSet: Array<{ name: string; value: string; options?: CookieOptions }>
+      ) {
+        for (const { name, value, options } of cookiesToSet) {
           res.cookies.set(name, value, options);
-        });
+        }
       }
     }
   });
 
   return { supabase, res };
 }
-
