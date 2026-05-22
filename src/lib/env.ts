@@ -15,8 +15,13 @@ export function publicEnv() {
       "Missing environment variable: NEXT_PUBLIC_SUPABASE_ANON_KEY"
     );
 
+  const appUrl =
+    process.env.NEXT_PUBLIC_APP_URL ??
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) ??
+    "http://localhost:3000";
+
   return {
-    appUrl: process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
+    appUrl,
     supabaseUrl,
     supabaseAnonKey
   };
