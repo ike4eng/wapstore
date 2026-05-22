@@ -9,10 +9,11 @@ export type InputProps = Omit<
 > & {
   id?: string;
   label?: string;
+  hint?: string;
 };
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  function Input({ className, id, label, ...props }, ref) {
+  function Input({ className, id, label, hint, ...props }, ref) {
     const inputId = id;
 
     return (
@@ -34,6 +35,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
           {...props}
         />
+        {hint ? <p className="text-xs text-neutral-600">{hint}</p> : null}
       </div>
     );
   }
